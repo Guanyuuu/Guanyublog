@@ -1,0 +1,83 @@
+.container {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-image: linear-gradient(-90deg, #29bdd9 0%, #276ace 100%);
+    .navigation {
+        position: sticky;
+        top: 3.75rem;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 2.875rem;
+        background-color: rgb(252, 157, 154);
+        .nav {
+            width: 60rem;
+            height: 2.875rem;
+            a {
+                margin: 0 2rem 0 0;
+                display: inline-block;
+                height: 2.875rem;
+                text-align: center;
+                line-height: 2.875rem;
+            }
+            a:hover {
+                color: rgb(240, 208, 0);
+            }
+            a:first-child {
+                color: red;
+            }
+        }
+    }
+    .section {
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem 0;
+        width: 60rem;
+        height: auto;
+        .article {
+            width: 43.75rem;
+            height: auto;
+            .arcontent {
+                margin: 0 0 1rem 0;
+                padding: .75rem 1.25rem .75rem;
+                height: auto;
+                border-top-left-radius: .625rem;
+                border-top-right-radius: 2.5rem;
+                border-bottom-left-radius: 1.25rem;
+                background-color: rgb(249, 205, 173);
+                overflow: hidden;
+                .title {
+                    margin-bottom: .625rem;
+                    font-size: 2rem;
+                }
+                .title:hover {
+                    color: rgb(240, 208, 0);
+                }
+                .type {
+                    margin-bottom: .625rem;
+                    span {
+                        display: inline-block;
+                        margin: 0 1.25rem 0 0;
+                    }
+                    .top {
+                        padding: .125rem;
+                        display: inline-block;
+                        background-color: yellow;
+                        border-radius: .3125rem;
+                        color: black;
+                    }
+                }
+                .introduce {
+                    width: 100%;
+                    height: auto;
+                }
+                .checkall {
+                    float: right;
+                }
+            }
+        }
+    }
+}

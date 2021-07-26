@@ -1,0 +1,18 @@
+.ad {
+    width: 15rem;
+    height: auto;
+    .greet {
+        padding: .75rem 1.25rem .75rem;
+        height: auto;
+        background-color: rgb(200, 200, 169);
+        .first {
+            img {
+                display: inline-block;
+                margin: 0 1.25rem 0 0;
+                vertical-align: middle;
+                width: 2rem;
+                height: 2rem;
+            }
+        }
+    }
+}
