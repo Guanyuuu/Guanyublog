@@ -29,7 +29,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
             nav.style.transition = 'transform 0.6s ease'
         }
       }
-  },[])
+  })
   
   const handleType = (e:any) => {
     let links = document.querySelector('.styles_nav__gcAIG') as any
@@ -45,16 +45,16 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
         setRenderData(res)
         break
       case "HTML":
-        setRenderData(res.filter((value:any) => value.type == 'html'))
+        setRenderData(res.filter((value:any) => value.type == 'HTML'))
         break
       case "CSS":
-        setRenderData(res.filter((value:any) => value.type == 'css'))
+        setRenderData(res.filter((value:any) => value.type == 'CSS'))
         break
       case "JS/TS":
-        setRenderData(res.filter((value:any) => value.type == 'js/ts'))
+        setRenderData(res.filter((value:any) => value.type == 'JS/TS'))
         break
       case "NODE.JS":
-        setRenderData(res.filter((value:any) => value.type == 'node'))
+        setRenderData(res.filter((value:any) => value.type == 'NODEJS'))
         break
     }
     

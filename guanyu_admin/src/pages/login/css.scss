@@ -1,0 +1,25 @@
+.login-con {
+    overflow: hidden;
+    form {
+        position: relative;
+        left: -9.375rem;
+        top: -6.925rem;
+        margin: 50vh 0 0 50%;
+    }
+}
+
+.login-form {
+    max-width: 300px;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.ant-col-rtl .login-form-forgot {
+    float: left;
+}
+
+.login-form-button {
+    width: 100%;
+}

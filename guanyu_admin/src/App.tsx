@@ -1,11 +1,25 @@
-import React from 'react';
+import {Route, BrowserRouter, Switch, Redirect} from 'react-router-dom'
+import route from './route/config'
+import Login from './pages/login/login';
 import './App.css';
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      ..................
-    </div>
+    <BrowserRouter>
+      <Switch>
+        {
+          route.map((value:any, index) => {
+            return (
+              <Route path={value.path} component={value.page} key={index}/>
+            )
+          })
+        }
+        <Redirect to="/login" component={Login}/>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

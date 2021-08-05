@@ -34,6 +34,15 @@ export default (appInfo: EggAppInfo) => {
     // load into agent, default is close
     agent: false,
   };
+  // 解决同源问题
+  config.security = {
+    csrf:false, // 关闭egg的CSRF防御， csrf token
+    domainWhiteList: ['*'] // 解决响应头code403， 返回200
+  };
+  config.cors = {
+    origin: 'http://localhost:3000',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  };
 
   // the return config will combines to EggAppConfig
   return {

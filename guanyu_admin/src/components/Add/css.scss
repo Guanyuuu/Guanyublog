@@ -1,0 +1,25 @@
+.text-con {
+    display: flex;
+    align-items: center;
+    height: 35rem;
+    textarea {
+        width: 48%;
+        height: 100%;
+        outline-style: none;
+        border: none;
+        overflow: visible;
+        resize: none;
+    }
+    .ant-input {
+        border: 1px solid rgba(61, 179, 137, 0.6);
+    }
+    .card {
+        display: inline-block;
+        margin-left: 4%;
+        padding: .25rem .6875rem;
+        width: 48%;
+        height: 100%;
+        border: 1px solid rgba(61, 179, 137, 0.6);
+        border-radius: .25rem;
+    }
+}
