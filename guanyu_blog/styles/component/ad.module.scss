@@ -1,10 +1,46 @@
 .ad {
     width: 15rem;
     height: auto;
+    .profile {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 1.25rem 1.875rem;
+        background-color: rgb(255, 255, 255);
+        border-bottom: 5px solid rgb(244, 245, 245);
+        img {
+            width: 5.625rem;
+            height: 5.625rem;
+            border-radius: 2.8125rem;
+        }
+        span {
+            padding: .3125rem;
+            width: 100%;
+            text-align: center;
+            color: #007FFF;
+        }
+        .link {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: auto;
+            div {
+                width: 2px;
+                height: 100%;
+                background-color: rgb(244, 245, 245);
+            }
+            img {
+                margin: 0 .625rem;
+                width: 1.875rem;
+                height: 1.875rem;
+                border-radius: 1.40625rem;
+            }
+        }
+    }
     .greet {
         padding: .75rem 1.25rem .75rem;
         height: auto;
-        background-color: rgb(200, 200, 169);
+        background-color: rgb(255, 255, 255);
         .first {
             img {
                 display: inline-block;

@@ -11,32 +11,52 @@ import a from '../styles/index.module.scss'
 
 const Index:FC<indexProps> = ({res}:indexProps) => {
   const [renderData, setRenderData] = useState(res)
-  const [type, setType] = useState('推荐')
+  const [type, setType] = useState('推荐')  
+  const marked = require('marked')
+  marked.setOptions({
+      renderer: new marked.Renderer(),
+      highlight: function(code:any) {
+        const hljs = require('highlight.js');
+        return hljs.highlightAuto(code).value;
+      },
+      gfm: true,
+      tables: true,
+      breaks: false,
+      pedantic: false,
+      smartLists: true,
+      smartypants: false
+    });
+    
 
   // 做header的滑动效果
   useEffect(() => {
-    window.onscroll = function handleScroll(e):void {
+    function handleScroll():void {
         let fixedLength:number  = window.pageYOffset
         let header = document.querySelector('.header_header__kPgJD') as HTMLDivElement
         let nav = document.querySelector('.styles_navigation__1r1vr') as HTMLDivElement  
+        
         if(fixedLength > 200) {
             header.style.transform = 'translate(0,-3.75rem)'
             header.style.transition = 'transform 0.6s ease'
             nav.style.transform = 'translate(0,-3.75rem)'
-        }else {
+        }else if( fixedLength <=200 && nav) {
             header.style.transform = 'translate(0,0)'
-            nav.style.transform = 'translate(0)'
+            nav.style.transform = 'translate(0,0)'
             nav.style.transition = 'transform 0.6s ease'
         }
       }
-  })
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      removeEventListener("scroll", handleScroll)
+    }
+  },[])
   
   const handleType = (e:any) => {
     let links = document.querySelector('.styles_nav__gcAIG') as any
     links.childNodes.forEach((value:any) => {
-      value.style.color = '#ffffff'
+      value.style.color = 'rgba(0, 0, 0, 0.8)'
     })
-    e.target.style.color = 'red'
+    e.target.style.color = 'rgb(0, 127, 255)'
     setType(e.target.innerHTML)
 
 
@@ -61,7 +81,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
   }
   return (
     <div className={a.container}>
-      <Header />
+      <Header/>
       <div className={a.navigation}>
         <div className={a.nav} onClick={handleType}>
           <Link href="#"><a>推荐</a></Link>
@@ -83,14 +103,15 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
                   <div className={a.type}>
                     {value.istop ? <span className={a.top}>置顶</span> : ''}
                     <span className={a.time}>{value.time.substr(0,10)}</span>
-                    <span className={a.artype}>{value.type}</span>
-                    <span className={a.count}>{value.count}</span>
+                    <span className={a.artype}><img src="/static/type.svg" alt="" /> {value.type}</span>
+                    <span className={a.count}><img src="/static/count.svg" alt="" /> {value.count}</span>
                   </div>
-                  <div className={a.introduce}>
-                    {value.introduce}
+                  <div className={a.introduce}
+                    dangerouslySetInnerHTML={{__html:marked(value.introduce)}}
+                  >
                   </div>
                   <div className={a.checkall}>
-                    <Link href={{pathname:"/detail", query:{"id":value.id}}}><a>览全部 &gt;</a></Link>
+                    <Link href={{pathname:"/detail", query:{"id":value.id,"type":type}}}><a>览全部 &gt;</a></Link>
                   </div>
                 </div>
               )
@@ -106,8 +127,11 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
 
 export async function getServerSideProps() {
   let data = await Axios.get(urlPath.getArticle)
+  let topD = data.data.res.filter((value:any) => value.istop === 1)
+  let botD = data.data.res.filter((value:any) => value.istop !== 1)
+  let res = [...topD, ...botD]
   return {
-    props:{res:data.data.res}
+    props:{res}
   }
   
 }

@@ -23,11 +23,31 @@ marked.setOptions({
   });
 
 const Detail:FC = ({res, type}:any) => {
+    useEffect(() => {
+        function handleScroll():void {
+            let fixedLength:number  = window.pageYOffset
+            let header = document.querySelector('.header_header__kPgJD') as HTMLDivElement
+            let nav = document.querySelector('.detail_naviga__oEVCj') as HTMLDivElement  
+            if(fixedLength > 200) {
+                header.style.transform = 'translate(0,-3.75rem)'
+                header.style.transition = 'transform 0.6s ease'
+                nav.style.transform = 'translate(0,-3.75rem)'
+            }else {
+                header.style.transform = 'translate(0,0)'
+                nav.style.transform = 'translate(0)'
+                nav.style.transition = 'transform 0.6s ease'
+            }
+          }
+        window.addEventListener("scroll", handleScroll)
+        return () => {
+          removeEventListener("scroll", handleScroll)
+        }
+      },[])
 
     return(
         <div className={d.container}>
             <Header />
-            <div className={d.navigation}>
+            <div className={d.naviga}>
                 <div className={d.nav}>
                 <Link href="/"><a>首页 &gt;</a></Link>
                 <Link href="#"><a>{type}</a></Link>

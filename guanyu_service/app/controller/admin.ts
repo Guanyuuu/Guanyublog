@@ -49,12 +49,14 @@ export default class AdminController extends Controller{
         let sql1 = "insert into article(title,istop,time,type,count,introduce) "+
                     "values('"+articleTitle+"','"+isTop+"','"+articleTime+"','"+articleType+"',100,'"+articleIntroduce+"');"
         let res1 = await app.mysql.query(sql1)
+        
 
 
-        let sql2 = "insert into article_content(content) "+
+        let sql2 = "insert into article_content(`content`) "+
                     "values('"+articleContent+"');"
-        let res2 = await app.mysql.query(sql2)
 
+        let res2 = await app.mysql.query(sql2)
+        
 
         if(res1.affectedRows === 1 && res2.affectedRows === 1) {
             ctx.body = {"data": "添加成功"}
@@ -115,7 +117,6 @@ export default class AdminController extends Controller{
             articleIntroduce,
             articleContent
         } = ctx.request.body
-        console.log(ctx.request.body);
         
         let articleTime = (new Date()).toJSON().substr(0, 10)
         const sql = "update article t1,article_content t2 set t1.title='"+articleTitle+"',"+

@@ -7,16 +7,21 @@ import './css.scss'
 
 const Lists:FC = (props:any) => {
     const [list, setList] = useState([{id:0,title:'',type:'',time:'',count:''}])
+    const [deleFlag, setDeleFlag] = useState('')
     useEffect(() => {
          (async () => {
              let res = await requestArticles()
              setList(res.data.res)
+             setDeleFlag('0')
          })()
-    })
+    },[deleFlag])
 
     const handleConfirm = async (id:number) => {
         let res = await requestDeleteArticle({id})
+        console.log(res.config.data["id"]);
+        
         if(res.data.data === "删除成功") {
+            setDeleFlag('1')
             message.success('删除成功!!');
         }
     }

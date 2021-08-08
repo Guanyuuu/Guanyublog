@@ -40,7 +40,7 @@ export default (appInfo: EggAppInfo) => {
     domainWhiteList: ['*'] // 解决响应头code403， 返回200
   };
   config.cors = {
-    origin: 'http://localhost:3000',
+    origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
   };
 

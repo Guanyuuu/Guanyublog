@@ -4,7 +4,7 @@
     align-items: center;
     width: 100%;
     height: auto;
-    background-image: linear-gradient(-90deg, #29bdd9 0%, #276ace 100%);
+    background-color: rgb(244, 245, 245);
     .navigation {
         position: sticky;
         top: 3.75rem;
@@ -12,7 +12,9 @@
         justify-content: center;
         width: 100%;
         height: 2.875rem;
-        background-color: rgb(252, 157, 154);
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+        z-index: 2;
         .nav {
             width: 60rem;
             height: 2.875rem;
@@ -24,10 +26,10 @@
                 line-height: 2.875rem;
             }
             a:hover {
-                color: rgb(240, 208, 0);
+                color: #007FFF;
             }
             a:first-child {
-                color: red;
+                color: #007FFF;
             }
         }
     }
@@ -40,21 +42,21 @@
         .article {
             width: 43.75rem;
             height: auto;
+            box-shadow: 0 2px 2px 0 rgb(0 0 0 / 5%);
             .arcontent {
-                margin: 0 0 1rem 0;
                 padding: .75rem 1.25rem .75rem;
                 height: auto;
-                border-top-left-radius: .625rem;
-                border-top-right-radius: 2.5rem;
-                border-bottom-left-radius: 1.25rem;
-                background-color: rgb(249, 205, 173);
+                border-bottom: 1px solid rgb(229, 230, 235);
+                background-color: rgb(255, 255, 255);
                 overflow: hidden;
                 .title {
                     margin-bottom: .625rem;
                     font-size: 2rem;
+                    font-weight: 600;
+                    color: #007FFF;
                 }
                 .title:hover {
-                    color: rgb(240, 208, 0);
+                    color: #009FFF;
                 }
                 .type {
                     margin-bottom: .625rem;
@@ -65,17 +67,34 @@
                     .top {
                         padding: .125rem;
                         display: inline-block;
-                        background-color: yellow;
+                        background-color: rgb(0, 127, 255);
                         border-radius: .3125rem;
-                        color: black;
+                        color: white;
+                    }
+                    .artype {
+                        img {
+                            width: 0.9rem;
+                            height: 0.9rem;
+                        }
+                    }
+                    .count {
+                        img {
+                            width: 1.3rem;
+                            height: 1.3rem;
+                            vertical-align: text-bottom;
+                        }
                     }
                 }
                 .introduce {
                     width: 100%;
                     height: auto;
+                    font-size: .6875rem;
                 }
                 .checkall {
                     float: right;
+                }
+                .checkall:hover {
+                    color: rgb(0, 127, 255);
                 }
             }
         }

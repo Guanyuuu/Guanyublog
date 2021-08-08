@@ -5,8 +5,9 @@
     justify-content: center;
     width: 100%;
     height: 3.75rem;
-    background-color: rgb(254, 67, 101);
-    border-bottom: 1px solid rgb(222, 188, 222);
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(244, 245, 245);
+    z-index: 3;
     .content {
         width: 75rem;
         height: 3.75rem;
@@ -18,27 +19,68 @@
             width: 100%;
             height: 100%;
             li:nth-child(1) {
-                img {
-                    width: 3.75rem;
-                    height: 3.75rem;
-                    border-radius: 1.875rem;
-                    vertical-align: bottom;
+                line-height: 3.75rem;
+                a {
+                    color: rgb(0, 127, 255);
+                    font-size: 1.875rem;
                 }
-                span {
-                    font-size: 30px;
+                span:nth-child(2) {
+                    font-size: 1rem;
+                    vertical-align: bottom;
                 }
             }
             li:nth-child(2) {
-                margin: 0 0 0 35.25rem;
+                position: relative;
+                margin: 0 0 0 33rem;
                 height: 3.75rem;
                 line-height: 3.75rem;
-                input {
+                .input {
+                    width: 13.75rem;
+                    height: 2rem;
                     padding: .2rem .75rem;
-                    background: url('../../static/serch.svg') no-repeat;
-                    background-size: 1.5rem 1.5rem;
-                    background-position: 9.625rem;
-                    border-radius: .625rem;
+                    border-radius: .625rem 0 0 .625rem;
+                    border-color: #007FFF;
+                    border-right: none;
                     outline-style: none;
+                }
+                button {
+                    width: 2.5rem;
+                    height: 2rem;
+                    background-color: #007FFF;
+                    border: none;
+                    vertical-align: middle;
+                    border-radius: 0 .625rem .625rem 0;
+                    img {
+                        width: 1.4rem;
+                        height: 1.4rem;
+                    }
+                }
+                button:hover {
+                    background-color: #008FFF
+                }
+                .serach {
+                    display: none;
+                    position: absolute;
+                    top: 2.4375rem;
+                    left: 0;
+                    padding: 0 .5rem;
+                    width: 13.83rem;
+                    min-height: 2rem;
+                    background-color: #fff;
+                    border: 2px solid #007FFF;
+                    border-top: none;
+                    border-radius: 0 0 .625rem .625rem;
+                    a {
+                        display: block;
+                        height: 1.7625rem;
+                        line-height: 1.5625rem;
+                        font-size: 1.0625rem;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    a:hover {
+                        color: #007FFF;
+                    }
                 }
             }
             li:nth-child(3) {
@@ -48,9 +90,10 @@
                     height: 3.75rem;
                     line-height: 3.75rem;
                     text-align: center;
+                    font-size: 1.25rem;
                 }
                 a:hover {
-                    color: rgb(240, 208, 0);
+                    color: #007FFF;
                 }
             }
         }
