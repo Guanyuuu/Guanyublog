@@ -7,3 +7,15 @@ declare module "react-router-dom" {
     const Redirect:any
     export {BrowserRouter, Route, Switch, Link, HashRouter, Redirect}
 }
+
+declare module "react-window" {
+    const FixedSizeList:any
+    export {
+        FixedSizeList
+    }
+}
+
+declare module "spark-md5" {
+    const SparkMD5:any
+    export default SparkMD5
+}

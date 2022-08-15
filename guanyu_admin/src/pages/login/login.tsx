@@ -1,17 +1,23 @@
-import React,{FC} from "react";
+import React,{FC, useState} from "react";
 import {Form, Input, Button} from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import Slide from "../../components/Slide/Slide"
 import {requestLoginAuth} from '../../util/requestMethod'
 import './css.scss'
 
+interface loginInfo {
+    username:string
+    password:string
+}
 
 const Login:FC = (props:any) => {
+    const [slideShow, setSlideShow] = useState<boolean>(false)
 
-    const onFinish = async(values: any) => {
+    const onFinish = async(values: loginInfo) => {
         let res = await requestLoginAuth(values)
         if(res.data.data === '登录成功') {
             sessionStorage.setItem('uniqueIdf', res.data.uniqueIdf)
-            props.history.replace('/main')
+            setSlideShow(true)
         }else {
             console.log('fail');
         }
@@ -55,6 +61,9 @@ const Login:FC = (props:any) => {
                     Or <a href="/main">register now!</a>
                 </Form.Item>
             </Form>
+            {
+                slideShow && <Slide history={props.history}/>
+            }
         </div>
     )
 }

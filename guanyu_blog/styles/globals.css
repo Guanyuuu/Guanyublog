@@ -7,8 +7,8 @@ body {
     color: rgba(0, 0, 0, 0.8);
 }
 
-body {
-    overflow-y: scroll;
+html::-webkit-scrollbar {
+    width: 0;
 }
 
 a {
@@ -18,4 +18,11 @@ a {
 
 * {
     box-sizing: border-box;
+}
+
+.custom-codespan {
+    padding: .125rem .3125rem;
+    border-radius: .25rem .25rem 0 .25rem;
+    background-color: #eff0f0;
+    white-space: wrap;
 }

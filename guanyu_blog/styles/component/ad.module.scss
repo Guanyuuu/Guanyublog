@@ -1,54 +1,106 @@
-.ad {
-    width: 15rem;
-    height: auto;
-    .profile {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        padding: 1.25rem 1.875rem;
-        background-color: rgb(255, 255, 255);
-        border-bottom: 5px solid rgb(244, 245, 245);
-        img {
-            width: 5.625rem;
-            height: 5.625rem;
-            border-radius: 2.8125rem;
-        }
-        span {
-            padding: .3125rem;
-            width: 100%;
-            text-align: center;
-            color: #007FFF;
-        }
-        .link {
+@media only screen and (min-width:768px) {
+    .ad {
+        width: 15rem;
+        height: auto;
+        .profile {
             display: flex;
             justify-content: center;
-            width: 100%;
-            height: auto;
-            div {
-                width: 2px;
-                height: 100%;
-                background-color: rgb(244, 245, 245);
-            }
+            flex-wrap: wrap;
+            padding: 1.25rem 1.875rem;
+            background-color: rgb(255, 255, 255);
+            border-bottom: 5px solid rgb(244, 245, 245);
             img {
-                margin: 0 .625rem;
-                width: 1.875rem;
-                height: 1.875rem;
-                border-radius: 1.40625rem;
+                width: 5.625rem !important;
+                height: 5.625rem !important;
+                border-radius: 2.8125rem;
+            }
+            span {
+                padding: .3125rem;
+                width: 100%;
+                text-align: center;
+                color: #007FFF;
+            }
+            .link {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                height: auto;
+                .g {
+                    width: 2px;
+                    height: 100%;
+                    background-color: rgb(244, 245, 245);
+                }
+                img {
+                    width: 1.875rem !important;
+                    height: 1.875rem !important;
+                    border-radius: 1.40625rem;
+                }
+                a {
+                    display: inline-block;
+                    margin: 0 .625rem;
+                }
             }
         }
+        .greet {
+            padding: .75rem 1.25rem .75rem;
+            height: auto;
+            background-color: rgb(255, 255, 255);
+            text-align: center;
+            font-weight: 600;
+        }
     }
-    .greet {
-        padding: .75rem 1.25rem .75rem;
+}
+
+@media only screen and (max-width:767px) {
+    .ad {
+        display: none;
+        width: 15rem;
         height: auto;
-        background-color: rgb(255, 255, 255);
-        .first {
+        .profile {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1.25rem 1.875rem;
+            background-color: rgb(255, 255, 255);
+            border-bottom: 5px solid rgb(244, 245, 245);
             img {
-                display: inline-block;
-                margin: 0 1.25rem 0 0;
-                vertical-align: middle;
-                width: 2rem;
-                height: 2rem;
+                width: 5.625rem !important;
+                height: 5.625rem !important;
+                border-radius: 2.8125rem;
             }
+            span {
+                padding: .3125rem;
+                width: 100%;
+                text-align: center;
+                color: #007FFF;
+            }
+            .link {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                height: auto;
+                .g {
+                    width: 2px;
+                    height: 100%;
+                    background-color: rgb(244, 245, 245);
+                }
+                img {
+                    width: 1.875rem !important;
+                    height: 1.875rem !important;
+                    border-radius: 1.40625rem;
+                }
+                a {
+                    display: inline-block;
+                    margin: 0 .625rem;
+                }
+            }
+        }
+        .greet {
+            padding: .75rem 1.25rem .75rem;
+            height: auto;
+            background-color: rgb(255, 255, 255);
+            text-align: center;
+            font-weight: 600;
         }
     }
 }

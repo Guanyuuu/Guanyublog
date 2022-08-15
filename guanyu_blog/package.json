@@ -1,26 +1,27 @@
 {
-  "name": "guanyu_blog",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "axios": "^0.21.1",
-    "highlight.js": "^11.1.0",
-    "marked": "^2.1.3",
-    "next": "11.0.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "sass": "^1.35.2"
-  },
-  "devDependencies": {
-    "@types/react": "17.0.14",
-    "eslint": "7.31.0",
-    "eslint-config-next": "11.0.1",
-    "typescript": "4.3.5"
-  }
+    "name": "guanyu_blog",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build && next export",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "highlight.js": "^11.6.0",
+        "marked-change-little": "^1.0.1",
+        "next": "^12.2.3",
+        "react": "17.0.2",
+        "react-dom": "17.0.2",
+        "sass": "^1.35.2"
+    },
+    "devDependencies": {
+        "@types/node": "^18.6.0",
+        "@types/react": "17.0.14",
+        "eslint": "7.31.0",
+        "eslint-config-next": "11.0.1",
+        "typescript": "4.3.5"
+    }
 }

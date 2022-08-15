@@ -13,3 +13,9 @@ export const requestDeleteArticle = (value:any) => Axios.post(urlPath.deleteArti
 export const requestSingleArticle = (value:any) => Axios.post(urlPath.getSingleArticle,value) //查询单个文章
 
 export const requestUpdateArticle = (value:any) => Axios.post(urlPath.updateArticle,value)  //更新文章
+
+export const requestUploadFile = (value:any, config:any) => Axios.post(urlPath.uploadFile, value, config) // 上传文件
+
+export const requestMergeUpload = (value:any) => Axios.post(urlPath.mergeUploadFile, value) // 合并文件
+
+export const requestCheckFile = (value:any) => Axios.post(urlPath.checkFile, value)  // 检查文件

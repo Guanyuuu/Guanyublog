@@ -13,6 +13,10 @@ const plugin: EggPlugin = {
   cors:{
     enable:true,
     package:'egg-cors'
+  },
+  multipart:{
+    enable:true,
+    package:'egg-multipart'
   }
 };
 

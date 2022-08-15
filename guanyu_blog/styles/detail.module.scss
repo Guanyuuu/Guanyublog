@@ -1,49 +1,253 @@
-.container {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-    width: 100%;
-    height: auto;
-    background-color: rgb(244, 245, 245);
-    .naviga {
-        position: sticky;
-        top: 3.75rem;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        height: 2.875rem;
-        background-color: rgb(255, 255, 255);
-        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
-        .nav {
-            width: 60rem;
-            height: 2.875rem;
-            a {
-                margin: 0 .625rem 0 0;
-                display: inline-block;
+@media only screen and(min-width:768px) {
+    .guanyu {
+        width: 100vw;
+        height: 100vh;
+        background-color: rgb(244, 245, 245);
+        overflow-y: scroll;
+        .top_header {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            .naviga {
+                display: flex;
+                justify-content: center;
+                width: 100%;
                 height: 2.875rem;
-                text-align: center;
-                line-height: 2.875rem;
+                background-color: rgb(255, 255, 255);
+                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+                z-index: 2;
+                .nav {
+                    width: 60rem;
+                    height: 2.875rem;
+                    a {
+                        margin: 0 .625rem 0 0;
+                        display: inline-block;
+                        height: 2.875rem;
+                        text-align: center;
+                        line-height: 2.875rem;
+                    }
+                    a:nth-child(2) {
+                        color: #007FFF;
+                    }
+                    a:hover {
+                        color: #007FFF;
+                    }
+                }
             }
-            a:nth-child(2) {
-                color: #007FFF;
+        }
+        .section {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0 0 0;
+            width: 100%;
+            height: auto;
+            .article {
+                margin-right: 1rem;
+                padding: 3.125rem;
+                width: 50rem;
+                min-height: 36.25rem;
+                color: black;
+                background-color: rgb(255, 255, 255);
+                font-size: .9375rem;
             }
-            a:hover {
-                color: #007FFF;
+            .othercss {
+                line-height: 1.875rem;
+                ol,
+                ul {
+                    padding-left: 1em;
+                }
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                    color: #007FFF;
+                }
+                a {
+                    color: #1672F3
+                }
+                h3 {
+                    font-size: 1.25rem;
+                }
+                table {
+                    height: auto;
+                    border-spacing: 0;
+                    border-collapse: separate;
+                    thead {
+                        tr {
+                            th {
+                                padding: .625rem;
+                                text-align: left;
+                                border: 1px solid #e8e9e8;
+                                font-weight: normal;
+                            }
+                            &:first-child :first-child {
+                                border-top-left-radius: .625rem;
+                            }
+                            &:first-child :last-child {
+                                border-top-right-radius: .625rem;
+                            }
+                        }
+                    }
+                    tbody {
+                        tr {
+                            td {
+                                padding: .625rem;
+                                border: 1px solid #e8e9e8;
+                            }
+                            &:last-child :first-child {
+                                border-bottom-left-radius: .625rem;
+                            }
+                            &:last-child :last-child {
+                                border-bottom-right-radius: .625rem;
+                            }
+                        }
+                    }
+                }
+                pre {
+                    border-radius: .625rem .625rem 0 .625rem;
+                    overflow: hidden;
+                }
+                blockquote {
+                    display: flex;
+                    margin: 0;
+                    height: auto;
+                    &::before {
+                        margin-right: .625rem;
+                        align-self: stretch;
+                        content: "";
+                        display: block;
+                        width: .25rem;
+                        background-color: #e8e9e8;
+                        border-radius: .125rem;
+                    }
+                }
             }
         }
     }
-    .section {
-        display: flex;
-        justify-content: space-between;
-        margin: 1rem 0;
-        width: 60rem;
-        height: auto;
-        .article {
-            padding: 1.25rem;
-            width: 43.75rem;
-            min-height: 36.25rem;
-            color: black;
-            background-color: rgb(255, 255, 255);
+}
+
+@media only screen and(max-width:767px) {
+    .guanyu {
+        width: 100vw;
+        height: 100vh;
+        background-color: rgb(244, 245, 245);
+        overflow-y: scroll;
+        .top_header {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            .naviga {
+                width: 100%;
+                height: 2.875rem;
+                background-color: rgb(255, 255, 255);
+                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+                z-index: 2;
+                .nav {
+                    margin-left: 1.25rem;
+                    height: 2.875rem;
+                    a {
+                        margin: 0 .625rem 0 0;
+                        display: inline-block;
+                        height: 2.875rem;
+                        text-align: center;
+                        line-height: 2.875rem;
+                    }
+                    a:nth-child(2) {
+                        color: #007FFF;
+                    }
+                    a:hover {
+                        color: #007FFF;
+                    }
+                }
+            }
+        }
+        .section {
+            margin: 1rem 0 0 0;
+            width: 100%;
+            height: auto;
+            .article {
+                padding: 1.25rem;
+                width: 100%;
+                min-height: 36.25rem;
+                color: black;
+                background-color: rgb(255, 255, 255);
+                font-size: .875rem;
+            }
+            .othercss {
+                ol,
+                ul {
+                    padding-left: 1em;
+                }
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                    color: #007FFF;
+                }
+                a {
+                    color: #1672F3
+                }
+                h3 {
+                    font-size: 1.25rem;
+                }
+                table {
+                    height: auto;
+                    border-spacing: 0;
+                    border-collapse: separate;
+                    thead {
+                        tr {
+                            th {
+                                padding: .625rem;
+                                text-align: left;
+                                border: 1px solid #e8e9e8;
+                                font-weight: normal;
+                            }
+                            &:first-child :first-child {
+                                border-top-left-radius: .625rem;
+                            }
+                            &:first-child :last-child {
+                                border-top-right-radius: .625rem;
+                            }
+                        }
+                    }
+                    tbody {
+                        tr {
+                            td {
+                                padding: .625rem;
+                                border: 1px solid #e8e9e8;
+                            }
+                            &:last-child :first-child {
+                                border-bottom-left-radius: .625rem;
+                            }
+                            &:last-child :last-child {
+                                border-bottom-right-radius: .625rem;
+                            }
+                        }
+                    }
+                }
+                pre {
+                    border-radius: .625rem .625rem 0 .625rem;
+                    overflow: hidden;
+                }
+                blockquote {
+                    display: flex;
+                    margin: 0;
+                    height: auto;
+                    &::before {
+                        margin-right: .625rem;
+                        align-self: stretch;
+                        content: "";
+                        display: block;
+                        width: .25rem;
+                        background-color: #e8e9e8;
+                        border-radius: .125rem;
+                    }
+                }
+            }
         }
     }
 }

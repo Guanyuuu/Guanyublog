@@ -1,84 +1,117 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState, useRef, memo, useCallback} from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import Axios from 'axios'
-import urlPath from '../config/apiUrl'
+import urlPath from '../../config/apiUrl'
+import {useDebounce} from "../../hooks"
+import {op} from "../../type/api"
 import b from '../../styles/component/header.module.scss'
+import searchimg from '../../static/search.svg'
 
-const Header = () => {
-    const [searchV, setSearchV] = useState('')
-    const [searchRes, setSearchRes] = useState([{title:'',id:''}])
-    const [listSearch, setListSearch] = useState([{title:'',id:''}])
 
-    useEffect(() => {
-        (async() => {
-            let res = await Axios.get(urlPath.getArticle)
-            let data = res.data.res.map((value:any) => {
-                return {
-                    title:value.title,
-                    id:value.id
-                }
-            })
-            setSearchRes(data)
-        })()
-    },[])
 
-    useEffect(() => {
-        let search = document.querySelector('.header_serach__4oeih') as HTMLDivElement
-        let input = document.querySelector('.header_input__23zEB') as HTMLDivElement
-        const focusI = async() => {
-            search.style.display = "block"
-        }
-
-        const noFocus = () => {
-            setTimeout(() => {
-                search.style.display = "none"
-            }, 300);
-        }
-        input.addEventListener('focus', focusI)
-        input.addEventListener('blur', noFocus)
-        return () => {
-            removeEventListener("focus", focusI)
-            removeEventListener('blur', noFocus)
-        }
-    })
-    const collInput = (e:any) => {
-        setSearchV(e.target.value)
-        
-        let dataArr = searchRes.filter((value:any) => {
-            for(let i = 0;i < e.target.value?.length;i++) {
-                if(value.title.indexOf(e.target.value?.charAt(i)) !== -1) {
-                    return value
-                }
+interface headerType {
+    id?:number
+    searchFunction:(data:[], options:op) => void
+}
+const Header = (props:headerType) => {
+    // 防抖hook
+    const [debounceAuto, getTimer] = useDebounce()
+    const [debounceManual] = useDebounce()
+    const keywordRef = useRef("")
+    
+    // 发起网络请求，请求关键词搜索
+    async function _s() {
+        try {
+            let limit:any = {
+                m:0,
+                n:10,
+                keyWord:keywordRef.current
             }
-        })
-        setListSearch(dataArr)
+            limit = JSON.stringify(limit)
+            let res = await Axios.get(`${urlPath.searchArticles}/${limit}`)
+            props.searchFunction(res.data.res, {
+                isSearch:true,
+                keyWord:keywordRef.current
+            })
+        }catch(e) {
+            console.log("搜索失败：",e)
+        }
+    }
+    const collInput = (e:any):void => {
+        let value:string = e.target.value
+        value = value.trim()
+        if(value === "") return
+        // 进行转义，把%转义为\%
+        let keywords:any = value.replace(/(?=[%\?\*])/g, "\\")
+        keywordRef.current = keywords
+        
+        debounceAuto(_s, 1000)()
+    }
+
+    // 点击，取消自动搜索，直接进行搜索
+    const handleManualSearch = async():Promise<any> => {
+        if(keywordRef.current === "") return
+        // 取消自动搜索
+        clearTimeout(getTimer())
+        try {
+            let limit:any = {
+                m:0,
+                n:10,
+                keyWord:keywordRef.current
+            }
+            limit = JSON.stringify(limit)
+            let res = await Axios.get(`${urlPath.searchArticles}/${limit}`)
+            props.searchFunction(res.data.res, {
+                isSearch:true,
+                keyWord:keywordRef.current
+            })
+        }catch(e) {
+            console.log("搜索失败：",e)
+        }
+    }
+
+    // 按回车键搜索
+    const searchRef = useRef<any>()
+    const handleEnterSearch = (e:any):void => {
+        let code = e.keyCode
+        if(code === 13) {
+            searchRef.current.click()
+        }
     }
 
     return (
-        <div className={b.header}> 
+        <div 
+        className={b.header} 
+        > 
             <div className={b.content}>
                 <ul>
                     <li>
-                        <Link href="/"><a>Guanyu</a></Link>
-                        <span>  welcome!!!</span>
+                        <Link href={`/`}><a>Guanyu</a></Link>
+                        <span>  blooooog</span>
                     </li>
                     <li>
-                        <input type="text" className={b.input} onChange={collInput} placeholder="你想搜索什么呢?"/>
-                        <button><img src="/static/search.svg"/></button>
+                        <input type="text" 
+                        className={b.input} 
+                        onChange={collInput} 
+                        onKeyUp={handleEnterSearch}
+                        placeholder="你想搜索什么标题呢?"
+                        />
+                        <button
+                        ref={searchRef}
+                        onClick={debounceManual(handleManualSearch, 300)}
+                        >
+                            <Image 
+                            src={searchimg} 
+                            alt=""
+                            />
+                        </button>
                         <div className={b.serach}>
-                            {
-                                listSearch.map((value:any) => {
-                                    return(
-                                        <div key={value.id}>
-                                            <Link href={{pathname:"/detail", query:{"id":value.id,"type":"搜索"}}}><a>{value.title}</a></Link>
-                                        </div>
-                                    )
-                                })
-                            }
+                            
                         </div>
                     </li>
                     <li>
-                        <Link href="/"><a> 首页</a></Link>
+                        <Link href={`/${props.id ? "#" + props.id : ""}`}><a> 首页</a></Link>
                     </li>
                 </ul>
             </div>
@@ -87,4 +120,4 @@ const Header = () => {
 }
 
 
-export default Header
+export default memo(Header)

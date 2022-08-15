@@ -1,5 +1,9 @@
 import {Controller} from 'egg'
 
+const path = require('path')
+const fs = require('fs')
+const awaitWriteStream = require('await-stream-ready').write;
+const sendToWormhole = require('stream-wormhole');
 export default class AdminController extends Controller{
     public async getType() {
         const {ctx, app} = this
@@ -37,37 +41,36 @@ export default class AdminController extends Controller{
         const {ctx, app} = this
         let articleInfo = ctx.request.body
         const {
+            aid,
             articleTitle,
             isTop,
             articleType,
             articleIntroduce,
             articleContent
         } = articleInfo
-
-
         let articleTime = (new Date()).toJSON().substr(0, 10)
-        let sql1 = "insert into article(title,istop,time,type,count,introduce) "+
-                    "values('"+articleTitle+"','"+isTop+"','"+articleTime+"','"+articleType+"',100,'"+articleIntroduce+"');"
-        let res1 = await app.mysql.query(sql1)
-        
-
-
-        let sql2 = "insert into article_content(`content`) "+
-                    "values('"+articleContent+"');"
-
-        let res2 = await app.mysql.query(sql2)
-        
-
-        if(res1.affectedRows === 1 && res2.affectedRows === 1) {
-            ctx.body = {"data": "添加成功"}
-        }else {
-            ctx.body = {"data": "添加失败"}
+        // 对文章内容进行过滤' 改为"
+        let filterContent = articleContent.replace(/[']/g, '"')
+        let filterIntroduce = articleIntroduce.replace(/[']/g, '"')
+        let sql1 = `insert into article(aid,title,istop,time,type,count,introduce) values('${aid}','${articleTitle}','${isTop}','${articleTime}','${articleType}',0,'${filterIntroduce}');`
+        let sql2 = `insert into article_content(aid,content) values('${aid}','${filterContent}');`
+        try{
+            let res1 = await app.mysql.query(sql1)
+            let res2 = await app.mysql.query(sql2)
+    
+            if(res1.affectedRows === 1 && res2.affectedRows === 1) {
+                ctx.body = {"data": "添加成功"}
+            }else {
+                ctx.body = {"data": "添加失败"}
+            }
+        }catch(e) {
+            console.log(e)
         }
     }
     // 查询所有文章
     public async getArticleList() {
         const {ctx, app} = this
-        const sql = 'select id,title,type,time,count from article'
+        const sql = 'select aid,title,type,time,count from article'
         const res = await app.mysql.query(sql)
         if(res.length > 0){
             ctx.body = {res}
@@ -82,27 +85,29 @@ export default class AdminController extends Controller{
         const {ctx, app} = this
         const {id:did} = ctx.request.body
         
-        const sql = "delete article,article_content from article left join article_content "+
-                    "on article.id = article_content.id where "+
-                    "article.id = "+did+";"
-        let res = await app.mysql.query(sql)
-        if(res.affectedRows === 2) {
-            ctx.body = {
-                "data":"删除成功"
+        const sql = `delete article,article_content from article left join article_content on article.aid = article_content.aid where article.aid = ${did};`
+        try {
+            let res = await app.mysql.query(sql)
+            if(res.affectedRows === 2) {
+                ctx.body = {
+                    "data":"删除成功"
+                }
+            }else {
+                ctx.body = {
+                    "data":"删除失败"
+                }
             }
-        }else {
-            ctx.body = {
-                "data":"删除失败"
-            }
+        }catch(e) {
+            console.log("数据库删除失败", e)
         }
     }
     // 获取单个文章内容
     public async getSingle(){
         const {ctx, app} = this
         const {id:sid} = ctx.request.body
-        const sql = 'select title,istop,type,content from article join article_content on '+
-                    'article.id = article_content.id where '+
-                    'article.id = '+sid
+        const sql = 'select title,istop,type,introduce,content from article join article_content on '+
+                    'article.aid = article_content.aid where '+
+                    'article.aid = '+sid
         const res = await app.mysql.query(sql)
         ctx.body = {res}
     }
@@ -125,11 +130,84 @@ export default class AdminController extends Controller{
                     "t1.time='"+articleTime+"',"+
                     "t1.introduce='"+articleIntroduce+"',"+
                     "t2.content='"+articleContent+"' "+
-                    "where t1.id=t2.id and t1.id="+uid+";"
-        const res = app.mysql.query(sql)
+                    "where t1.aid=t2.aid and t1.aid="+uid+";"
+        try {
+            const res = app.mysql.query(sql)
+            ctx.body = {
+                "msg":"更新成功",
+                res
+            }
+        }catch(e) {
+            console.log(e);
+        }
+    }
+
+    // 上传文件区
+
+    public async check() {
+        const {ctx, config} = this
+        const data = ctx.request.body
+        
+        if(fs.existsSync(path.join(config.baseDir, "app/public/files", data.filename))) {
+            ctx.body = {
+                msg: "文件存在",
+                des:1
+            }
+            return
+        }else {
+            let target = path.join(config.baseDir, 'app/public/upload')
+            let files = fs.readdirSync(target)
+            
+            ctx.body = {
+                msg:"文件不存在",
+                des:0,
+                chunks:files
+            }
+        }         
+    }
+
+    public async upload() {
+        const {ctx,config} = this
+
+        let file = await ctx.getFileStream()
+
+        // 判断本地是否有上传文件夹，没有则创建
+        if(!fs.existsSync(path.join(config.baseDir, 'app/public/upload'))) {
+            fs.mkdirSync(path.join(config.baseDir, 'app/public/upload'))
+        }
+        const target = path.join(config.baseDir, 'app/public/upload', file.fields.hash)
+        const writeStream = fs.createWriteStream(target)
+        try {
+            await awaitWriteStream(file.pipe(writeStream))
+        }catch{
+            await sendToWormhole(file)
+        }
         ctx.body = {
-            "msg":"更新成功",
-            res
+            msg:"分片上传成功"
+        }
+    } 
+
+    public async merge() {
+        const {ctx,  config} = this
+        let {name} = ctx.request.body
+        let target = path.join(config.baseDir, 'app/public/upload')
+        let saveFilePath = path.join(config.baseDir, "app/public/files")
+        let files = fs.readdirSync(target)
+        files.forEach((value) => {
+            let index = value.split("-")[0]
+            fs.renameSync(path.join(target,value), path.join(target,`${index}`))
+        })
+        let file = fs.readdirSync(target)
+        file.sort((a, b) => a-b).map(chunkpath => {
+            fs.appendFileSync(
+                path.join(saveFilePath,name),
+                fs.readFileSync(`${target}/${chunkpath}`)
+            )
+            fs.rmSync(`${target}/${chunkpath}`)
+        })
+        ctx.body = {
+            msg:"合并成功",
+            url:`http://localhost:7001/public/upload/guanyu${name}`
         }
     }
 }

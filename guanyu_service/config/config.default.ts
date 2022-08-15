@@ -43,7 +43,10 @@ export default (appInfo: EggAppInfo) => {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
   };
-
+  config.multipart = {
+    mode:'stream',
+    fileSize: '1000mb',
+  };
   // the return config will combines to EggAppConfig
   return {
     ...config,

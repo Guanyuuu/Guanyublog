@@ -1,14 +1,20 @@
+import { memo ,useEffect} from 'react'
 import c from '../../styles/component/footer.module.scss'
 
-const Footer = () => {
-
+interface footerType {
+    scrollTop?:number | string
+}
+const Footer = ({scrollTop}:footerType) => {
     return (
-        <div className={c.footer}>
+        <footer 
+        className={c.footer}
+        style={{transform:`translate(0, ${scrollTop}rem)`}}
+        >
             <div>
-                <span>由React+Node+Mysql搭建<br />部署在阿里云服务器</span>
+                <span>奋斗后实现的理想是给人永久快乐的<br />不断进取是实现理想的根本</span>
             </div>
-        </div>
+        </footer>
     )
 }
 
-export default Footer
+export default memo(Footer)
