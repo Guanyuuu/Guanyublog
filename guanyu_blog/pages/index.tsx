@@ -26,7 +26,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
     containerHeight:0
   })
   // transform的高度不应该有默认值，否则会导致位置闪烁
-  const [scrollTopCompute, setScrollTopCompute] = useState<number>()  
+  const [scrollTopCompute, setScrollTopCompute] = useState<number>(0)  
   // 进行列表请求，每滚动一个160，则请求2个新的列表数据
   // 该值每次再tab栏切换后，需要进行重置
   const aidRef = useRef<number>(10)
@@ -100,6 +100,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
     }
   },[res])
 
+  const isHandleScrollRef = useRef<any>(false)
   // tab栏的切换动画
   // tab栏的各项数据点击加载
   const handleType = async(e:any) => {
@@ -118,6 +119,13 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
         keyWord:""
       }
       sessionStorage.setItem("type", e.target.innerHTML)
+
+      // 更新滚动的距离和容器滚动，容器滚动顶部会触发滚动事件，则需要取消事件
+      isHandleScrollRef.current = true
+      // 设置列表滚动为零
+      setScrollTopCompute(0)
+      guanyuRef.current.scrollTop = 0
+
       // 根据tab栏进行请求
       let limit:any = {
         m:0,
@@ -200,12 +208,10 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       }
     }
     // 非搜索状态下
-    let sessionType = sessionStorage.getItem("type")
-
     let limit:any = {
       m:aidRef.current,
       n:2,
-      t:sessionType
+      t:tabTypeRef.current
     }
     if(limit.t === "JS/TS") {
       limit.t = "JSTS"
@@ -241,12 +247,16 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
     }else if(scrollTop > 200 && navIndexScrollTop < 200) {
         setIndexNavScrollTop(scrollTop)
     }
+    // 如果点击跳转顶部，不触发滚动事件
+    if(isHandleScrollRef.current) return
+
     let start = Math.max((scrollTop - 320) / 160 >> 0, 0)
     if(start > tabCurrentDataRef.current.length - 8) return
     if(virtualDataLengthRef.current === start) return
     virtualDataLengthRef.current = start
     let end = start + 8
     let newRenderData = tabCurrentDataRef.current.slice(start, end)
+    console.log(newRenderData)
     let transform = scrollTop - 320 - scrollTop % 160
     setScrollTopCompute(transform / 16)
     setAllIndexData({
@@ -258,7 +268,9 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
   // 处理navigation，hover的情况
   // state用于存储滚动的距离，用来判断是否应该触发,鼠标移入nav触发的动画
   const [navIndexScrollTop, setIndexNavScrollTop] = useState<number>(0)
-  const hoverNavigationEnter = ():void => {
+  const hoverNavigationEnter = (e:any):void => {
+      const element = e.target
+      if(element.id !== "navright") return
       if(navIndexScrollTop > 200) {
           let toStyles = {
               transform:"translate(0, 0)",
@@ -291,6 +303,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       }
     })
     tabCurrentDataRef.current = data
+    setScrollTopCompute(0)
     setAllIndexData({
       renderData:data.slice(0, 8),
       containerHeight:data.length * 10 + 14.875
@@ -314,14 +327,10 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
     window.open(url, '_blank')
   }
 
-  useEffect(() => {
-    let width = document.documentElement.clientWidth
-    console.log(width);
-    
-    
-  })
+  const guanyuRef = useRef<any>()
   return (
     <div 
+    ref={guanyuRef}
     className={a.guanyu}
     onScroll={handleVirtual}
     >
@@ -345,23 +354,28 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
         >
           <div 
           className={a.nav} 
+          id="nav"
           onClick={handleType}
           ref={navRef}
           >
-            <Link href="#" prefetch={false} shallow><a>REC</a></Link>
-            <Link href="#" prefetch={false} shallow><a>HTML</a></Link>
-            <Link href="#" prefetch={false} shallow><a>CSS</a></Link>
-            <Link href="#" prefetch={false} shallow><a>JS/TS</a></Link>
-            <Link href="#" prefetch={false} shallow><a>REST</a></Link>
+            <Link href="#" prefetch={false} shallow scroll><a>REC</a></Link>
+            <Link href="#" prefetch={false} shallow scroll><a>HTML</a></Link>
+            <Link href="#" prefetch={false} shallow scroll><a>CSS</a></Link>
+            <Link href="#" prefetch={false} shallow scroll><a>JS/TS</a></Link>
+            <Link href="#" prefetch={false} shallow scroll><a>REST</a></Link>
           </div>
+          <div
+          className={a.navright}
+          id="navright"
+          ></div>
         </div>
       </header>
       <div 
       className={a.section}  
       >
-        <div className={a.article} style={
-          scrollTopCompute ? {transform:`translate(0, ${scrollTopCompute}rem)`} : {}
-        } onClick={handleIncreaseArticleAccess}>
+        <div className={a.article}
+         style={{transform:`translate(0, ${scrollTopCompute}rem)`}} 
+         onClick={handleIncreaseArticleAccess}>
           {
             isLoading.current ?
             allIndexData?.renderData.map((value:any) => {

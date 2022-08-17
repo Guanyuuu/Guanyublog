@@ -22,7 +22,7 @@
                 background-color: rgb(255, 255, 255);
                 box-shadow: 0 .0625rem .125rem 0 rgb(0 0 0 / 5%);
                 .nav {
-                    width: 66.25rem;
+                    width: 21.875rem;
                     height: 2.875rem;
                     a {
                         margin: 0 2rem 0 0;
@@ -37,6 +37,9 @@
                     a:first-child {
                         color: #007FFF;
                     }
+                }
+                .navright {
+                    width: 44.375rem;
                 }
             }
         }

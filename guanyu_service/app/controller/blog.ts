@@ -2,6 +2,7 @@ import { Controller } from 'egg';
 
 export default class BlogController extends Controller {
   public async getArticle() {
+    console.log("11")
     const { ctx, app } = this;     
     const sql = 'select * from article'
     let res = await app.mysql.query(sql)
