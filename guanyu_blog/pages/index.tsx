@@ -30,7 +30,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
   const [scrollTopCompute, setScrollTopCompute] = useState<number>(0)  
   // 进行列表请求，每滚动一个160，则请求2个新的列表数据
   // 该值每次再tab栏切换后，需要进行重置
-  const aidRef = useRef<number>(10)
+  const aidRef = useRef<number>(15)
   // 导航栏ref
   const navRef = useRef<any>()
   // 用于存储页面tab的总的数据，由于总的数据变化不一定需要页面进行渲染
@@ -49,12 +49,13 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
 
   // 监控窗口的变化达到动态改变rem值
   const slideHederRef = useRef<any>()
-  
+  const [htmlFont, setHtmlFont] = useState<number>(0)
   const resizeChangeRem = (e:any) => {
     let clientWidth = e.target.innerWidth
     slideHederRef.current = clientWidth
     let rem = 1396 / 100
     let font = clientWidth / rem
+    setHtmlFont(font)
     document.documentElement.style.fontSize = `${font}px`
   }
   useEffect(() => {
@@ -63,6 +64,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
     slideHederRef.current = clientWidth
     let rem = 1396 / 100
     let font = clientWidth / rem
+    setHtmlFont(font)
     document.documentElement.style.fontSize = `${font}px`
   },[])
   useEffect(() => {
@@ -75,7 +77,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
   const reload = async(sessionType:string) => {
     let limit:any = {
       m:0,
-      n:10,
+      n:15,
       t:sessionType
     }
     if(limit.t === "JS/TS") {
@@ -91,11 +93,11 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       let botD = lists.filter((value:any) => value.istop !== 1)
       let res = [...topD, ...botD]
       // 恢复aid的排序
-      aidRef.current = 10
+      aidRef.current = 15
       isLoading.current = true
       tabCurrentDataRef.current = lists
       setAllIndexData({
-        renderData:res.slice(0, 10),
+        renderData:res.slice(0, 15),
         containerHeight:lists.length * 1.6 + 2.38
       })
     }catch(e) {
@@ -111,7 +113,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       tabCurrentDataRef.current = res
       tabTypeRef.current = "REC"
       setAllIndexData({
-        renderData:res.slice(0, 8),
+        renderData:res.slice(0, 15),
         containerHeight:res.length * 1.6 + 2.38
       })
     }else {
@@ -158,7 +160,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       // 根据tab栏进行请求
       let limit:any = {
         m:0,
-        n:10,
+        n:15,
         t:e.target.innerHTML
       }
       if(limit.t === "JS/TS") {
@@ -176,11 +178,11 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
         let botD = lists.filter((value:any) => value.istop !== 1)
         let res = [...topD, ...botD]
         // 恢复aid的排序
-        aidRef.current = 10
+        aidRef.current = 15
         isLoading.current = true
         tabCurrentDataRef.current = lists
         setAllIndexData({
-          renderData:res.slice(0, 10),
+          renderData:res.slice(0, 15),
           containerHeight:lists.length * 1.6 + 2.38   
         })
       }catch(e) {
@@ -196,7 +198,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
    // header动画
   function headerSlide(scrollTop:number):void {
     // 头部滚动触发动画只有那在哪一瞬间触发，其余的忽略
-    if(slideHederRef.current > 768) {
+    if(slideHederRef.current > 830) {
       if(scrollTop > 200 && navIndexScrollTop <= 200) {
         let toStyles = {
           transform:'translate(0,-0.6rem)',
@@ -229,7 +231,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
   // 数据预加载,包括区分搜索状态下的数据请求
   async function listScrollRequest(top:number) {
     if(isPrefetchLoadingRef.current) return
-    if(((top / 160 >> 0) * 2) <= aidRef.current - 10) return
+    if(((top / 160 >> 0) * 2) <= aidRef.current - 15) return
     let {isSearch, keyWord} = isSearchOptionsRef.current
     // 在搜索状态下，进行预加载数据
     if(isSearch) {
@@ -300,12 +302,12 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
     if(isHandleScrollRef.current) return
     let font = slideHederRef.current / (1396 / 100)
     // 转为rem大小, 以及移动端和PC不同的样式上
-    let articleHeight = slideHederRef.current > 768 ? 1.6 : 5.7272
+    let articleHeight = slideHederRef.current > 830 ? 1.6 : 5.7272
     let start = Math.max((scrollTop - articleHeight * 2 * font) / (articleHeight * font) >> 0, 0)
-    if(start > tabCurrentDataRef.current.length - 10) return
+    if(start > tabCurrentDataRef.current.length - 15) return
     if(virtualDataLengthRef.current === start) return
     virtualDataLengthRef.current = start
-    let end = start + 10
+    let end = start + 15
     let newRenderData = tabCurrentDataRef.current.slice(start, end)
     let transform = scrollTop - articleHeight * 2 * font - scrollTop % (articleHeight * font)
     setScrollTopCompute(transform / font)
@@ -332,7 +334,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
 
   const  hoverNavigationLeave = ():void => {
       
-      if(slideHederRef.current > 768) {
+      if(slideHederRef.current > 830) {
         if(navIndexScrollTop > 200) {
             let toStyles = {
                 transform:'translate(0,-0.6rem)',
@@ -364,11 +366,15 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       }
     })
     tabCurrentDataRef.current = data
+    // 设置预加载数据未完成
+    isPrefetchLoadingRef.current = false
+    // 设置初始10个数据
+    aidRef.current = 15
     // 切换tab的类型
     tabTypeRef.current = "REC"
     setScrollTopCompute(0)
     setAllIndexData({
-      renderData:data.slice(0, 10),
+      renderData:data.slice(0, 15),
       containerHeight:data.length * 1.6 + 2.38
     })
   },[])
@@ -463,11 +469,17 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
                       {value.istop ? <span className={a.top}>置顶</span> : ''}
                       <span className={a.time}>{value.time.substr(0,10)}</span>
                       <span className={a.artype}>
-                        <Image src={typeimg} alt="" width={16} height={16}/> 
+                        <Image src={typeimg} alt="" 
+                        width={slideHederRef.current > 830 ? 0.16 * htmlFont : 0.48 * htmlFont} 
+                        height={slideHederRef.current > 830 ? 0.16 * htmlFont : 0.48 * htmlFont}
+                        /> 
                       </span>
                       <span className={a.literal}>{value.type}</span>
                       <span className={a.count}>
-                        <Image src={countimg} alt="" width={18} height={18}/> 
+                        <Image src={countimg} alt="" 
+                        width={slideHederRef.current > 830 ? 0.18 * htmlFont : 0.54 * htmlFont} 
+                        height={slideHederRef.current > 830 ? 0.18 * htmlFont : 0.54 * htmlFont}
+                        /> 
                       </span>
                       <span className={a.literal}>{value.count}</span>
                     </div> 
@@ -491,7 +503,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
 export async function getStaticProps() {
   let limit:any = {
     m:0,
-    n:10,
+    n:15,
     t:"REC"
   }
   limit = JSON.stringify(limit)
