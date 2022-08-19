@@ -5,6 +5,7 @@ const securityHeaders = [{
         key: 'X-XSS-Protection',
         value: '1; mode=block'
     },
+
     // 防止XSS攻击
 
     // {

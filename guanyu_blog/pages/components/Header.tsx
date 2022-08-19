@@ -22,6 +22,23 @@ const Header = (props:headerType) => {
     
     // 发起网络请求，请求关键词搜索
     async function _s() {
+        if(keywordRef.current === "") {
+            let limit:any = {
+                m:0,
+                n:10,
+                t:"REC"
+            }
+            limit = JSON.stringify(limit)
+            let data = await Axios.get(`${urlPath.getArticleByLimit}/${limit}`)
+            let topD = data.data.res.filter((value:any) => value.istop === 1)
+            let botD = data.data.res.filter((value:any) => value.istop !== 1)
+            let res = [...topD, ...botD] as []
+            props.searchFunction(res, {
+                isSearch:false,
+                keyWord:keywordRef.current
+            })
+            return
+        }
         try {
             let limit:any = {
                 m:0,
@@ -41,7 +58,6 @@ const Header = (props:headerType) => {
     const collInput = (e:any):void => {
         let value:string = e.target.value
         value = value.trim()
-        if(value === "") return
         // 进行转义，把%转义为\%
         let keywords:any = value.replace(/(?=[%\?\*])/g, "\\")
         keywordRef.current = keywords

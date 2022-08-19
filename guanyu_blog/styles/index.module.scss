@@ -6,9 +6,10 @@
         height: 100vh;
         background-color: rgb(244, 245, 245);
         overflow-y: scroll;
+        font-size: .16rem;
         .space_height {
             float: left;
-            width: 0px;
+            width: 0rem;
         }
         .top_header {
             position: sticky;
@@ -18,18 +19,18 @@
                 display: flex;
                 justify-content: center;
                 width: 100%;
-                height: 2.875rem;
+                height: .46rem;
                 background-color: rgb(255, 255, 255);
-                box-shadow: 0 .0625rem .125rem 0 rgb(0 0 0 / 5%);
+                box-shadow: 0 .01rem .02rem 0 rgb(0 0 0 / 5%);
                 .nav {
-                    width: 21.875rem;
-                    height: 2.875rem;
+                    width: 3.5rem;
+                    height: .46rem;
                     a {
-                        margin: 0 2rem 0 0;
+                        margin: 0 .32rem 0 0;
                         display: inline-block;
-                        height: 2.875rem;
+                        height: .46rem;
                         text-align: center;
-                        line-height: 2.875rem;
+                        line-height: .46rem;
                     }
                     a:hover {
                         color: #007FFF;
@@ -39,7 +40,7 @@
                     }
                 }
                 .navright {
-                    width: 44.375rem;
+                    width: 7.1rem;
                 }
             }
         }
@@ -47,23 +48,23 @@
             display: flex;
             flex-flow: row nowrap;
             justify-content: center;
-            margin: 1rem 0 0 0;
+            margin: .16rem 0 0 0;
             width: 100%;
             height: auto;
             .article {
-                margin-right: 1rem;
-                width: 50rem;
+                margin-right: .16rem;
+                width: 8rem;
                 height: auto;
-                box-shadow: 0 .125rem .125rem 0 rgb(0 0 0 / 5%);
+                box-shadow: 0 .02rem .02rem 0 rgb(0 0 0 / 5%);
                 .arcontent {
-                    padding: .75rem 1.25rem .75rem;
-                    height: 10rem;
-                    border-bottom: .0625rem solid rgb(229, 230, 235);
+                    padding: .12rem .2rem .12rem;
+                    height: 1.6rem;
+                    border-bottom: .01rem solid rgb(229, 230, 235);
                     background-color: rgb(255, 255, 255);
                     overflow: hidden;
                     .title {
-                        margin-bottom: 1.25rem;
-                        font-size: 1.375rem;
+                        margin-bottom: .2rem;
+                        font-size: .22rem;
                         font-weight: 600;
                         color: #007FFF;
                         max-width: 70%;
@@ -75,16 +76,16 @@
                         color: #009FFF;
                     }
                     .type {
-                        margin-bottom: .625rem;
+                        margin-bottom: .1rem;
                         &>span {
                             display: inline-block;
-                            margin: 0 1.25rem 0 0;
+                            margin: 0 .2rem 0 0;
                         }
                         .top {
-                            padding: .125rem;
+                            padding: .02rem;
                             display: inline-block;
                             background-color: rgb(0, 127, 255);
-                            border-radius: .3125rem;
+                            border-radius: .05rem;
                             color: white;
                         }
                         .artype {
@@ -92,7 +93,7 @@
                             vertical-align: middle;
                         }
                         .literal {
-                            margin-left: -0.75rem;
+                            margin-left: -0.12rem;
                         }
                         .count {
                             vertical-align: middle;
@@ -100,8 +101,8 @@
                     }
                     .introduce {
                         width: 70%;
-                        height: 1.25rem;
-                        font-size: .875rem;
+                        height: .2rem;
+                        font-size: .14rem;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -126,9 +127,10 @@
         height: 100vh;
         background-color: rgb(244, 245, 245);
         overflow-y: scroll;
+        font-size: 0.16rem;
         .space_height {
             float: left;
-            width: 0px;
+            width: 0rem;
         }
         .top_header {
             position: sticky;
@@ -136,20 +138,20 @@
             z-index: 2;
             .navigation {
                 width: 100%;
-                height: 2.875rem;
+                height: 1.6466rem;
                 background-color: rgb(255, 255, 255);
-                box-shadow: 0 .0625rem .125rem 0 rgb(0 0 0 / 5%);
+                box-shadow: 0 .0358rem .0716rem 0 rgb(0 0 0 / 5%);
                 .nav {
                     display: flex;
                     justify-content: center;
                     width: 100%;
-                    height: 2.875rem;
+                    height: 1.6466rem;
                     a {
-                        margin: 0 2rem 0 0;
+                        margin: 0 1.1454rem 0 0;
                         display: inline-block;
-                        height: 2.875rem;
+                        height: 1.6466rem;
                         text-align: center;
-                        line-height: 2.875rem;
+                        line-height: 1.6466rem;
                     }
                     a:hover {
                         color: #007FFF;
@@ -164,22 +166,22 @@
             display: flex;
             flex-flow: row wrap;
             justify-content: center;
-            margin-top: 1rem;
+            margin-top: .5727rem;
             width: 100%;
             height: auto;
             .article {
                 width: 100%;
                 height: auto;
-                box-shadow: 0 .125rem .125rem 0 rgb(0 0 0 / 5%);
+                box-shadow: 0 .0716rem .0716rem 0 rgb(0 0 0 / 5%);
                 .arcontent {
-                    padding: .75rem 1.25rem .75rem;
-                    height: 10rem;
-                    border-bottom: .0625rem solid rgb(229, 230, 235);
+                    padding: .4295rem .7159rem .4295rem;
+                    height: 5.7272rem;
+                    border-bottom: .0358rem solid rgb(229, 230, 235);
                     background-color: rgb(255, 255, 255);
                     overflow: hidden;
                     .title {
-                        margin-bottom: 1.25rem;
-                        font-size: 1.375rem;
+                        margin-bottom: .7159rem;
+                        font-size: .7875rem;
                         font-weight: 600;
                         color: #007FFF;
                         max-width: 70%;
@@ -191,16 +193,16 @@
                         color: #009FFF;
                     }
                     .type {
-                        margin-bottom: .625rem;
+                        margin-bottom: .3579rem;
                         &>span {
                             display: inline-block;
-                            margin: 0 1.25rem 0 0;
+                            margin: 0 .7159rem 0 0;
                         }
                         .top {
-                            padding: .125rem;
+                            padding: .0716rem;
                             display: inline-block;
                             background-color: rgb(0, 127, 255);
-                            border-radius: .3125rem;
+                            border-radius: .179rem;
                             color: white;
                         }
                         .artype {
@@ -208,7 +210,7 @@
                             vertical-align: middle;
                         }
                         .literal {
-                            margin-left: -0.75rem;
+                            margin-left: -0.4295rem;
                         }
                         .count {
                             vertical-align: middle;
@@ -216,8 +218,8 @@
                     }
                     .introduce {
                         width: 70%;
-                        height: 1.25rem;
-                        font-size: .875rem;
+                        height: .7159rem;
+                        font-size: .5011rem;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;

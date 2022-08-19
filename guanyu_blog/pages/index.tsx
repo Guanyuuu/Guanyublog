@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useState, useRef, useCallback} from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import Head from 'next/head'
 import Axios from 'axios'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -45,6 +46,31 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
   const isPrefetchLoadingRef = useRef<boolean>(false)
   // 判断loading骨架屏
   const isLoading = useRef(true)
+
+  // 监控窗口的变化达到动态改变rem值
+  const slideHederRef = useRef<any>()
+  
+  const resizeChangeRem = (e:any) => {
+    let clientWidth = e.target.innerWidth
+    slideHederRef.current = clientWidth
+    let rem = 1396 / 100
+    let font = clientWidth / rem
+    document.documentElement.style.fontSize = `${font}px`
+  }
+  useEffect(() => {
+    // 执行第一次
+    let clientWidth = document.documentElement.clientWidth
+    slideHederRef.current = clientWidth
+    let rem = 1396 / 100
+    let font = clientWidth / rem
+    document.documentElement.style.fontSize = `${font}px`
+  },[])
+  useEffect(() => {
+    window.addEventListener('resize', resizeChangeRem)
+    return () => {
+      window.removeEventListener('resize', resizeChangeRem)
+    }
+  },[])
     
   const reload = async(sessionType:string) => {
     let limit:any = {
@@ -61,13 +87,16 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       isLoading.current = false
       let data = await Axios.get(`${urlPath.getArticleByLimit}/${limit}`)
       let lists = data.data.res
+      let topD = lists.filter((value:any) => value.istop === 1)
+      let botD = lists.filter((value:any) => value.istop !== 1)
+      let res = [...topD, ...botD]
       // 恢复aid的排序
       aidRef.current = 10
       isLoading.current = true
       tabCurrentDataRef.current = lists
       setAllIndexData({
-        renderData:lists.slice(0, 8),
-        containerHeight:lists.length * 10 + 14.875
+        renderData:res.slice(0, 10),
+        containerHeight:lists.length * 1.6 + 2.38
       })
     }catch(e) {
       console.log("tab数据请求出错:", e)
@@ -83,7 +112,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       tabTypeRef.current = "REC"
       setAllIndexData({
         renderData:res.slice(0, 8),
-        containerHeight:res.length * 10 + 14.875
+        containerHeight:res.length * 1.6 + 2.38
       })
     }else {
       // 页面进行刷新, 加载上次tab栏的数据
@@ -125,7 +154,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       // 设置列表滚动为零
       setScrollTopCompute(0)
       guanyuRef.current.scrollTop = 0
-
+      isHandleScrollRef.current = false
       // 根据tab栏进行请求
       let limit:any = {
         m:0,
@@ -142,13 +171,17 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
         isLoading.current = false
         let data = await Axios.get(`${urlPath.getArticleByLimit}/${limit}`)
         let lists = data.data.res
+        // 置顶排序
+        let topD = lists.filter((value:any) => value.istop === 1)
+        let botD = lists.filter((value:any) => value.istop !== 1)
+        let res = [...topD, ...botD]
         // 恢复aid的排序
         aidRef.current = 10
         isLoading.current = true
         tabCurrentDataRef.current = lists
         setAllIndexData({
-          renderData:lists.slice(0, 8),
-          containerHeight:lists.length * 10 + 14.875
+          renderData:res.slice(0, 10),
+          containerHeight:lists.length * 1.6 + 2.38   
         })
       }catch(e) {
         console.log("tab数据请求出错:", e)
@@ -163,18 +196,34 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
    // header动画
   function headerSlide(scrollTop:number):void {
     // 头部滚动触发动画只有那在哪一瞬间触发，其余的忽略
-    if(scrollTop > 200 && navIndexScrollTop <= 200) {
-      let toStyles = {
-        transform:'translate(0,-3.75rem)',
-        transition:'transform 0.6s ease'
+    if(slideHederRef.current > 768) {
+      if(scrollTop > 200 && navIndexScrollTop <= 200) {
+        let toStyles = {
+          transform:'translate(0,-0.6rem)',
+          transition:'transform 0.6s ease'
+        }
+        setToStyle(toStyles)
+      }else if(scrollTop <= 200 && navIndexScrollTop > 200) {
+        let toStyles = {
+          transform:"translate(0, 0)",
+          transition:"transform 0.6s ease"
+        }
+        setToStyle(toStyles)
       }
-      setToStyle(toStyles)
-    }else if(scrollTop <= 200 && navIndexScrollTop > 200) {
-      let toStyles = {
-        transform:"translate(0, 0)",
-        transition:"transform 0.6s ease"
+    }else {
+      if(scrollTop > 200 && navIndexScrollTop <= 200) {
+        let toStyles = {
+          transform:'translate(0,-2.1834rem)',
+          transition:'transform 0.6s ease'
+        }
+        setToStyle(toStyles)
+      }else if(scrollTop <= 200 && navIndexScrollTop > 200) {
+        let toStyles = {
+          transform:"translate(0, 0)",
+          transition:"transform 0.6s ease"
+        }
+        setToStyle(toStyles)
       }
-      setToStyle(toStyles)
     }
   }
   // 数据预加载,包括区分搜索状态下的数据请求
@@ -249,19 +298,20 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
     }
     // 如果点击跳转顶部，不触发滚动事件
     if(isHandleScrollRef.current) return
-
-    let start = Math.max((scrollTop - 320) / 160 >> 0, 0)
-    if(start > tabCurrentDataRef.current.length - 8) return
+    let font = slideHederRef.current / (1396 / 100)
+    // 转为rem大小, 以及移动端和PC不同的样式上
+    let articleHeight = slideHederRef.current > 768 ? 1.6 : 5.7272
+    let start = Math.max((scrollTop - articleHeight * 2 * font) / (articleHeight * font) >> 0, 0)
+    if(start > tabCurrentDataRef.current.length - 10) return
     if(virtualDataLengthRef.current === start) return
     virtualDataLengthRef.current = start
-    let end = start + 8
+    let end = start + 10
     let newRenderData = tabCurrentDataRef.current.slice(start, end)
-    console.log(newRenderData)
-    let transform = scrollTop - 320 - scrollTop % 160
-    setScrollTopCompute(transform / 16)
+    let transform = scrollTop - articleHeight * 2 * font - scrollTop % (articleHeight * font)
+    setScrollTopCompute(transform / font)
     setAllIndexData({
       renderData:newRenderData,
-      containerHeight:tabCurrentDataRef.current.length * 10 + 14.875
+      containerHeight:tabCurrentDataRef.current.length * 1.6 + 2.38
     })
   } 
 
@@ -281,12 +331,23 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
   }
 
   const  hoverNavigationLeave = ():void => {
-      if(navIndexScrollTop > 200) {
-          let toStyles = {
-              transform:'translate(0,-3.75rem)',
-              transition:'transform 0.3s ease'
-          }
-          setToStyle(toStyles)
+      
+      if(slideHederRef.current > 768) {
+        if(navIndexScrollTop > 200) {
+            let toStyles = {
+                transform:'translate(0,-0.6rem)',
+                transition:'transform 0.3s ease'
+            }
+            setToStyle(toStyles)
+        }
+      }else {
+        if(navIndexScrollTop > 200) {
+            let toStyles = {
+                transform:'translate(0,-2.1834rem)',
+                transition:'transform 0.3s ease'
+            }
+            setToStyle(toStyles)
+        }
       }
   }
 
@@ -303,30 +364,32 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       }
     })
     tabCurrentDataRef.current = data
+    // 切换tab的类型
+    tabTypeRef.current = "REC"
     setScrollTopCompute(0)
     setAllIndexData({
-      renderData:data.slice(0, 8),
-      containerHeight:data.length * 10 + 14.875
+      renderData:data.slice(0, 10),
+      containerHeight:data.length * 1.6 + 2.38
     })
   },[])
 
-  // 处理点击量
-  const handleIncreaseArticleAccess = async(e:any) => {
-    if(e.target.id) {
-      try {
-        await Axios.get(`${urlPath.increaseArticleAccess}/${e.target.id}`)
-      }catch(e) {
-        console.log("访问量增长出错：", e)
-      }
+
+  // 处理一个content项跳转到detail
+  const handleJumpDetail = async(id:string) => {
+    let url = `/detail?aid=${id}&type=${tabTypeRef.current}`
+    window.open(url, '_blank')
+    try {
+      await Axios.get(`${urlPath.increaseArticleAccess}/${id}`)
+    }catch(e) {
+      console.log("访问量增长出错：", e)
     }
   }
 
-  // 处理一个content项跳转到detail
-  const handleJumpDetail = (id:string):void => {
-    let url = `/detail?aid=${id}&type=${tabTypeRef.current}`
-    window.open(url, '_blank')
-  }
-
+  useEffect(() => {
+    console.log("index");
+    
+  })
+  
   const guanyuRef = useRef<any>()
   return (
     <div 
@@ -334,6 +397,13 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
     className={a.guanyu}
     onScroll={handleVirtual}
     >
+      <Head>
+        <title>guanyu</title>
+        <meta name="viewport" content='width=device-width, height=device-height,initial-scale=1, user-scalable=no'/>
+        <meta name="description" content="guanyu blog"/>
+        <meta name="keywords" content="guanyu,blog,前端,ES规范"/>
+        <link rel="icon" href="../static/kenan.jpg" type='image/jpg'/>
+      </Head>
       <div
       className={a.space_height}
       style={{
@@ -375,7 +445,7 @@ const Index:FC<indexProps> = ({res}:indexProps) => {
       >
         <div className={a.article}
          style={{transform:`translate(0, ${scrollTopCompute}rem)`}} 
-         onClick={handleIncreaseArticleAccess}>
+        >
           {
             isLoading.current ?
             allIndexData?.renderData.map((value:any) => {

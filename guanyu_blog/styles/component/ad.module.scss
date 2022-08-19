@@ -1,21 +1,21 @@
 @media only screen and (min-width:768px) {
     .ad {
-        width: 15rem;
+        width: 2.4rem;
         height: auto;
         .profile {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            padding: 1.25rem 1.875rem;
+            padding: .2rem .3rem;
             background-color: rgb(255, 255, 255);
-            border-bottom: 5px solid rgb(244, 245, 245);
+            border-bottom: .05rem solid rgb(244, 245, 245);
             img {
-                width: 5.625rem !important;
-                height: 5.625rem !important;
-                border-radius: 2.8125rem;
+                width: .9rem !important;
+                height: .9rem !important;
+                border-radius: .45rem;
             }
             span {
-                padding: .3125rem;
+                padding: .05rem;
                 width: 100%;
                 text-align: center;
                 color: #007FFF;
@@ -26,23 +26,23 @@
                 width: 100%;
                 height: auto;
                 .g {
-                    width: 2px;
+                    width: .02rem;
                     height: 100%;
                     background-color: rgb(244, 245, 245);
                 }
                 img {
-                    width: 1.875rem !important;
-                    height: 1.875rem !important;
-                    border-radius: 1.40625rem;
+                    width: .3rem !important;
+                    height: .3rem !important;
+                    border-radius: .225rem;
                 }
                 a {
                     display: inline-block;
-                    margin: 0 .625rem;
+                    margin: 0 .1rem;
                 }
             }
         }
         .greet {
-            padding: .75rem 1.25rem .75rem;
+            padding: .12rem .2rem .12rem;
             height: auto;
             background-color: rgb(255, 255, 255);
             text-align: center;
@@ -54,22 +54,22 @@
 @media only screen and (max-width:767px) {
     .ad {
         display: none;
-        width: 15rem;
+        width: 2.4rem;
         height: auto;
         .profile {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            padding: 1.25rem 1.875rem;
+            padding: .2rem .3rem;
             background-color: rgb(255, 255, 255);
-            border-bottom: 5px solid rgb(244, 245, 245);
+            border-bottom: .05rem solid rgb(244, 245, 245);
             img {
-                width: 5.625rem !important;
-                height: 5.625rem !important;
-                border-radius: 2.8125rem;
+                width: .9rem !important;
+                height: .9rem !important;
+                border-radius: .45rem;
             }
             span {
-                padding: .3125rem;
+                padding: .05rem;
                 width: 100%;
                 text-align: center;
                 color: #007FFF;
@@ -80,23 +80,23 @@
                 width: 100%;
                 height: auto;
                 .g {
-                    width: 2px;
+                    width: .02rem;
                     height: 100%;
                     background-color: rgb(244, 245, 245);
                 }
                 img {
-                    width: 1.875rem !important;
-                    height: 1.875rem !important;
-                    border-radius: 1.40625rem;
+                    width: .3rem !important;
+                    height: .3rem !important;
+                    border-radius: .225rem;
                 }
                 a {
                     display: inline-block;
-                    margin: 0 .625rem;
+                    margin: 0 .1rem;
                 }
             }
         }
         .greet {
-            padding: .75rem 1.25rem .75rem;
+            padding: .12rem .2rem .12rem;
             height: auto;
             background-color: rgb(255, 255, 255);
             text-align: center;

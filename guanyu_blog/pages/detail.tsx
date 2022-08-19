@@ -1,6 +1,7 @@
 import React,{FC, useEffect, useRef, useState} from 'react'
 import Axios from 'axios'
 import Link from 'next/link'
+import Head from 'next/head'
 import {marked} from "marked-change-little"
 import hljs from 'highlight.js';
 import Header from './components/Header'
@@ -52,19 +53,35 @@ const Detail:FC = ({res, type, id}:any) => {
             setNavDetailScrollTop(scrollTop)
         }
         function headerSlide():void {
-            if(scrollTop > 200) {
-                let toStyles = {
-                    transform:'translate(0,-3.75rem)',
+            if(slideHederRef.current > 768) {
+                if(scrollTop > 200) {
+                  let toStyles = {
+                    transform:'translate(0,-0.6rem)',
                     transition:'transform 0.6s ease'
-                }
-                setToStyle(toStyles)
-            }else if(scrollTop <= 200) {
-                let toStyles = {
+                  }
+                  setToStyle(toStyles)
+                }else if(scrollTop <= 200) {
+                  let toStyles = {
                     transform:"translate(0, 0)",
                     transition:"transform 0.6s ease"
+                  }
+                  setToStyle(toStyles)
                 }
-                setToStyle(toStyles)
-            }
+              }else {
+                if(scrollTop > 200) {
+                  let toStyles = {
+                    transform:'translate(0,-2.1834rem)',
+                    transition:'transform 0.6s ease'
+                  }
+                  setToStyle(toStyles)
+                }else if(scrollTop <= 200) {
+                  let toStyles = {
+                    transform:"translate(0, 0)",
+                    transition:"transform 0.6s ease"
+                  }
+                  setToStyle(toStyles)
+                }
+              }
         }
         headerSlide()
     }
@@ -83,22 +100,62 @@ const Detail:FC = ({res, type, id}:any) => {
     }
 
     const  hoverNavigationLeave = ():void => {
-        if(navDetailScrollTop > 200) {
-            let toStyles = {
-                transform:'translate(0,-3.75rem)',
-                transition:'transform 0.3s ease'
+        if(slideHederRef.current > 768) {
+            if(navDetailScrollTop > 200) {
+                let toStyles = {
+                    transform:'translate(0,-0.6rem)',
+                    transition:'transform 0.3s ease'
+                }
+                setToStyle(toStyles)
             }
-            setToStyle(toStyles)
-        }
+          }else {
+            if(navDetailScrollTop > 200) {
+                let toStyles = {
+                    transform:'translate(0,-2.1834rem)',
+                    transition:'transform 0.3s ease'
+                }
+                setToStyle(toStyles)
+            }
+          }
     }
 
     const handleSearch = ():void => {}
 
+    const slideHederRef = useRef<any>()
+    // 监控窗口的变化达到动态改变rem值
+    const resizeChangeRem = (e:any) => {
+        let clientWidth = e.target.innerWidth
+        slideHederRef.current = clientWidth
+        let rem = 1396 / 100
+        let font = clientWidth / rem
+        document.documentElement.style.fontSize = `${font}px`
+    }
+    useEffect(() => {
+        // 执行第一次
+        let clientWidth = document.documentElement.clientWidth
+        slideHederRef.current = clientWidth
+        let rem = 1396 / 100
+        let font = clientWidth / rem
+        document.documentElement.style.fontSize = `${font}px`
+      },[])
+    useEffect(() => {
+        window.addEventListener('resize', resizeChangeRem)
+        return () => {
+        window.removeEventListener('resize', resizeChangeRem)
+        }
+    },[])
     return(
         <div 
         className={d.guanyu}
         onScroll={handleScroll}
         >
+            <Head>
+                <title>guanyu</title>
+                <meta name="viewport" content='width=device-width, height=device-height,initial-scale=1, user-scalable=no'/>
+                <meta name="description" content="guanyu blog"/>
+                <meta name="keywords" content="guanyu,blog,前端,ES规范"/>
+                <link rel="icon" href="../static/kenan.jpg" type='image/jpg'/>
+            </Head>
             <header 
             className={d.top_header} 
             style={toStyle}

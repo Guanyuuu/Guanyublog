@@ -4,6 +4,7 @@
         height: 100vh;
         background-color: rgb(244, 245, 245);
         overflow-y: scroll;
+        font-size: .16rem;
         .top_header {
             position: sticky;
             top: 0;
@@ -12,19 +13,19 @@
                 display: flex;
                 justify-content: center;
                 width: 100%;
-                height: 2.875rem;
+                height: .46rem;
                 background-color: rgb(255, 255, 255);
-                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+                box-shadow: 0 .01rem .02rem 0 rgb(0 0 0 / 5%);
                 z-index: 2;
                 .nav {
-                    width: 60rem;
-                    height: 2.875rem;
+                    width: 9.6rem;
+                    height: .46rem;
                     a {
-                        margin: 0 .625rem 0 0;
+                        margin: 0 .1rem 0 0;
                         display: inline-block;
-                        height: 2.875rem;
+                        height: .46rem;
                         text-align: center;
-                        line-height: 2.875rem;
+                        line-height: .46rem;
                     }
                     a:nth-child(2) {
                         color: #007FFF;
@@ -38,20 +39,20 @@
         .section {
             display: flex;
             justify-content: center;
-            margin: 1rem 0 0 0;
+            margin: .16rem 0 0 0;
             width: 100%;
             height: auto;
             .article {
-                margin-right: 1rem;
-                padding: 3.125rem;
-                width: 50rem;
-                min-height: 36.25rem;
+                margin-right: .16rem;
+                padding: .5rem;
+                width: 8rem;
+                min-height: 5.8rem;
                 color: black;
                 background-color: rgb(255, 255, 255);
-                font-size: .9375rem;
+                font-size: .15rem;
             }
             .othercss {
-                line-height: 1.875rem;
+                line-height: .3rem;
                 ol,
                 ul {
                     padding-left: 1em;
@@ -68,7 +69,7 @@
                     color: #1672F3
                 }
                 h3 {
-                    font-size: 1.25rem;
+                    font-size: .2rem;
                 }
                 table {
                     height: auto;
@@ -77,36 +78,36 @@
                     thead {
                         tr {
                             th {
-                                padding: .625rem;
+                                padding: .1rem;
                                 text-align: left;
-                                border: 1px solid #e8e9e8;
+                                border: .01rem solid #e8e9e8;
                                 font-weight: normal;
                             }
                             &:first-child :first-child {
-                                border-top-left-radius: .625rem;
+                                border-top-left-radius: .1rem;
                             }
                             &:first-child :last-child {
-                                border-top-right-radius: .625rem;
+                                border-top-right-radius: .1rem;
                             }
                         }
                     }
                     tbody {
                         tr {
                             td {
-                                padding: .625rem;
-                                border: 1px solid #e8e9e8;
+                                padding: .1rem;
+                                border: .01rem solid #e8e9e8;
                             }
                             &:last-child :first-child {
-                                border-bottom-left-radius: .625rem;
+                                border-bottom-left-radius: .1rem;
                             }
                             &:last-child :last-child {
-                                border-bottom-right-radius: .625rem;
+                                border-bottom-right-radius: .1rem;
                             }
                         }
                     }
                 }
                 pre {
-                    border-radius: .625rem .625rem 0 .625rem;
+                    border-radius: .1rem .1rem 0 .1rem;
                     overflow: hidden;
                 }
                 blockquote {
@@ -114,13 +115,13 @@
                     margin: 0;
                     height: auto;
                     &::before {
-                        margin-right: .625rem;
+                        margin-right: .1rem;
                         align-self: stretch;
                         content: "";
                         display: block;
-                        width: .25rem;
+                        width: .04rem;
                         background-color: #e8e9e8;
-                        border-radius: .125rem;
+                        border-radius: .02rem;
                     }
                 }
             }
@@ -134,25 +135,26 @@
         height: 100vh;
         background-color: rgb(244, 245, 245);
         overflow-y: scroll;
+        font-size: 0.16rem;
         .top_header {
             position: sticky;
             top: 0;
             z-index: 2;
             .naviga {
                 width: 100%;
-                height: 2.875rem;
+                height: 1.6466rem;
                 background-color: rgb(255, 255, 255);
-                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+                box-shadow: 0 .0716rem .0716rem 0 rgb(0 0 0 / 5%);
                 z-index: 2;
                 .nav {
-                    margin-left: 1.25rem;
-                    height: 2.875rem;
+                    margin-left: .7159rem;
+                    height: 1.6466rem;
                     a {
-                        margin: 0 .625rem 0 0;
+                        margin: 0 .3579rem 0 0;
                         display: inline-block;
-                        height: 2.875rem;
+                        height: 1.6466rem;
                         text-align: center;
-                        line-height: 2.875rem;
+                        line-height: 1.6466rem;
                     }
                     a:nth-child(2) {
                         color: #007FFF;
@@ -164,16 +166,16 @@
             }
         }
         .section {
-            margin: 1rem 0 0 0;
+            margin: .5727rem 0 0 0;
             width: 100%;
             height: auto;
             .article {
-                padding: 1.25rem;
+                padding: .7159rem;
                 width: 100%;
-                min-height: 36.25rem;
+                min-height: 20.761rem;
                 color: black;
                 background-color: rgb(255, 255, 255);
-                font-size: .875rem;
+                font-size: .5011rem;
             }
             .othercss {
                 ol,
@@ -192,7 +194,7 @@
                     color: #1672F3
                 }
                 h3 {
-                    font-size: 1.25rem;
+                    font-size: .7159rem;
                 }
                 table {
                     height: auto;
@@ -201,36 +203,36 @@
                     thead {
                         tr {
                             th {
-                                padding: .625rem;
+                                padding: .3579rem;
                                 text-align: left;
-                                border: 1px solid #e8e9e8;
+                                border: .0358rem solid #e8e9e8;
                                 font-weight: normal;
                             }
                             &:first-child :first-child {
-                                border-top-left-radius: .625rem;
+                                border-top-left-radius: .3579rem;
                             }
                             &:first-child :last-child {
-                                border-top-right-radius: .625rem;
+                                border-top-right-radius: .3579rem;
                             }
                         }
                     }
                     tbody {
                         tr {
                             td {
-                                padding: .625rem;
-                                border: 1px solid #e8e9e8;
+                                padding: .3579rem;
+                                border: .0168px solid #e8e9e8;
                             }
                             &:last-child :first-child {
-                                border-bottom-left-radius: .625rem;
+                                border-bottom-left-radius: .3579rem;
                             }
                             &:last-child :last-child {
-                                border-bottom-right-radius: .625rem;
+                                border-bottom-right-radius: .3579rem;
                             }
                         }
                     }
                 }
                 pre {
-                    border-radius: .625rem .625rem 0 .625rem;
+                    border-radius: .3579rem .3579rem 0 .3579rem;
                     overflow: hidden;
                 }
                 blockquote {
@@ -238,13 +240,13 @@
                     margin: 0;
                     height: auto;
                     &::before {
-                        margin-right: .625rem;
+                        margin-right: .3579rem;
                         align-self: stretch;
                         content: "";
                         display: block;
-                        width: .25rem;
+                        width: .1432rem;
                         background-color: #e8e9e8;
-                        border-radius: .125rem;
+                        border-radius: .0716rem;
                     }
                 }
             }
